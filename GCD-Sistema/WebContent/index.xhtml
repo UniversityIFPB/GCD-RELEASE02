@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>Login - GCD</title>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+	
+	<h:outputStylesheet library="css" name="font-awesome.css"/>
+    <h:outputStylesheet library="css" name="material-design-iconic-font.css"/>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="animate.css"/>
+    <h:outputStylesheet library="css" name="layout.css"/>
+    <h:outputStylesheet library="css" name="components.css"/>
+    <h:outputStylesheet library="css" name="widgets.css"/>
+    <h:outputStylesheet library="css" name="plugins.css"/>
+    <h:outputStylesheet library="css" name="pages.css"/>
+    <h:outputStylesheet library="css" name="bootstrap-extend.css"/>
+    <h:outputStylesheet library="css" name="common.css"/>
+    <h:outputStylesheet library="css" name="responsive.css"/>
+    
+    <style>
+    	.bt-commandlink{margin-top:2em;}
+    	.logo-primary{width:40%;margin-left:5em;margin-top:-3em;}
+    	.content-page{margin-left: 17.9em;margin-top: 4.2em;}
+    	.login-page-footer{color:#fff;}
+    </style>
+    
+    
+    
+</h:head>
+	
+<h:body styleClass="login-page">	
+	
+	<div id="conteudo">
+		#{testeBean.inserDadosTeste()}
+		<section class="login-container boxed-login">
+		<div class="container">
+		<div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+			<h:form styleClass="j-forms" id="form_login">
+				<div class="login-form-header">
+		            <div class="logo">
+		                <h:graphicImage library="images" name="brand.png" style="width:60%;"/>
+		            </div>
+		        </div>
+				
+				<div class="login-form-content">
+				
+				<!-- start login -->
+				<div class="unit">
+			       	<div class="input login-input">
+			            <label class="icon-left" for="login">
+			            	<i class="zmdi zmdi-account"></i>
+			            </label>
+						<h:inputText value="#{loginBean.login}" id="login" styleClass="form-control login-frm-input" pt:placeholder="Login"/>
+					</div>
+				</div>
+				<!-- start password -->
+	            <div class="unit">
+	                <div class="input login-input">
+	                    <label class="icon-left" for="password">
+	                        <i class="zmdi zmdi-key"></i>
+	                    </label>
+						<h:inputSecret value="#{loginBean.senha}" id="senha" styleClass="form-control login-frm-input" pt:placeholder="Password"/>
+					</div>
+				</div>
+				</div>
+				
+				<div class="login-form-footer">
+					
+					<h:commandButton value="LOGIN" action="#{loginBean.fazerLogin}" styleClass="btn-block btn btn-primary"/>
+					
+					<h:panelGroup rendered="#{sessionBean.result != 'NONE'}">
+						<h:panelGroup rendered="#{sessionBean.result == 'SUCESSO'}">
+							<div
+								class="col-sm-12 alert alert-success alert-dismissible alert-adjust"
+								style="text-align: center; margin-top: 1.2em; font-weight: bold; padding: 0 1em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span>#{sessionBean.msg}<h:messages globalOnly="true" layout="table"
+										showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{sessionBean.result == 'ERRO'}">
+							<div
+								class="col-sm-12 alert alert-danger alert-dismissible alert-adjust"
+								style="text-align: center; margin-top: 1.2em; font-weight: bold; padding: 0 1em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span><h:messages globalOnly="true" layout="table"
+										showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+					
+				</div>
+			</h:form>
+		</div>
+		</div>
+		</section>
+	</div>
+	
+	<div id="footer" class="navbar-fixed-bottom">
+	 	<footer class="login-page-footer">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+		                <div class="footer-content">
+		                    <span class="footer-meta">Turma&nbsp;2016.1&nbsp;-&nbsp;DEPES&nbsp;<i class="fa fa-book"></i>&nbsp;IFPB</span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+	</div>
+	
+	<script src="resources/js/jquery.js"></script>
+	<script src="resources/js/jquery-migrate.js"></script>
+	<script src="resources/js/bootstrap.js"></script>
+	<script src="resources/js/jRespond.js"></script>
+	<script src="resources/js/hammerjs.js"></script>
+	<script src="resources/js/jquery.hammer.js"></script>
+	<script src="resources/js/smoothscroll.js"></script>
+	<script src="resources/js/smart-resize.js"></script>
+	
+	<script src="resources/js/jquery.validate.js"></script>
+	<script src="resources/js/jquery.form.js"></script>
+	<script src="resources/js/j-forms.js"></script>
+	<script src="resources/js/login-validation.js"></script>
+	
+	<!--Rightbar End Here-->
+	<script src="resources/js/jquery.ui.js"></script>
+	<script src="resources/js/nav.accordion.js"></script>
+	<script src="resources/js/hover.intent.js"></script>
+	<script src="resources/js/jquery.fitvids.js"></script>
+	<script src="resources/js/scrollup.js"></script>
+	<script src="resources/js/jquery.slimscroll.js"></script>
+	<script src="resources/js/jquery.syntaxhighlighter.js"></script>
+	<script src="resources/js/velocity.js"></script>
+	<script src="resources/js/jquery-jvectormap.js"></script>
+	<script src="resources/js/jquery-jvectormap-world-mill.js"></script>
+	<script src="resources/js/jquery-jvectormap-us-aea.js"></script>
+	
+	<!--iCheck-->
+	<script src="resources/js/icheck.js"></script>
+	<script src="resources/js/jquery.switch.button.js"></script>
+
+	<!--CHARTS-->
+	<script src="resources/js/chart/sparkline/jquery.sparkline.js"></script>
+	<script src="resources/js/chart/easypie/jquery.easypiechart.min.js"></script>
+	<script src="resources/js/chart/flot/excanvas.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.min.js"></script>
+	<script src="resources/js/chart/flot/curvedLines.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.time.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.stack.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.axislabels.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.resize.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.tooltip.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.spline.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.pie.min.js"></script>
+	
+	<!--Forms-->
+	<script src="resources/js/jquery.maskedinput.js"></script>
+	<script src="resources/js/jquery.validate.js"></script>
+	<script src="resources/js/jquery.form.js"></script>
+	<script src="resources/js/j-forms.js"></script>
+	<script src="resources/js/jquery.loadmask.js"></script>
+	<script src="resources/js/vmap.init.js"></script>
+	<script src="resources/js/theme-switcher.js"></script>
+	<script src="resources/js/apps.js"></script>
+</h:body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+#{sessionBean.check()}
+#{sessionBean.checkViewDiretor()}
+<ui:composition template="/template/base.xhtml">
+	
+	<ui:define name="title">Dashboard</ui:define>
+	
+	<ui:define name="nav">
+		<header class="topbar clearfix">
+			<div class="row" style="margin-left: 5em;display: inline-flex;">
+				<div class="col=md-8">
+					<h:panelGroup rendered="#{sessionBean.result != 'NONE'}">
+						<h:panelGroup rendered="#{sessionBean.result == 'SUCESSO'}">
+							<div
+								class="col-sm-12 alert alert-success alert-dismissible alert-adjust"
+								style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span>#{sessionBean.msg}<h:messages globalOnly="true"
+										layout="table" showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{sessionBean.result == 'ERRO'}">
+							<div
+								class="col-sm-12 alert alert-danger alert-dismissible alert-adjust"
+								style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span><h:messages globalOnly="true" layout="table"
+										showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+			</div>
+			<!--Topbar Left Branding With Logo Start-->
+		    <div class="topbar-left pull-left">
+		        <div class="clearfix">
+		            <ul class="left-branding pull-left clickablemenu ttmenu dark-style menu-color-gradient">
+		                <li><span class="left-toggle-switch"><i class="zmdi zmdi-menu"></i></span></li>
+		                <li>
+		                    <div class="logo">
+		                        <h:form><h:commandLink actionListener="page_painel"><h:graphicImage library="images" name="brand.png" styleClass="logo-primary"/></h:commandLink> </h:form>
+		                    </div>
+		                </li>
+		            </ul>
+		        </div>
+		    </div>
+		    <!--Topbar Left Branding With Logo End-->
+		
+			<!--Topbar Right Start Here-->
+			<div class="topbar-right pull-right" style="padding-top: 1em;color:#fff;padding-left:7em;padding-right:7em;background-color: #17bab8;">
+        		<div class="clearfix">
+        			<div>
+        				<h4>Bem Vindo #{sessionBean.usuarioLogado.nome}</h4>
+        			</div>
+        		</div>
+        	</div>
+		   
+		</header>
+	    
+	</ui:define>
+	
+	<ui:define name="sidebar">
+		<aside class="leftbar">
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == true}">
+		    	<ui:include src="/template/sidebar_distrital.xhtml"/>
+		    </h:panelGroup>
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == false}">
+		    	<ui:include src="/template/sidebar_diretor.xhtml"/>
+		    </h:panelGroup>
+		</aside>
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="content-page">
+			<section class="main-container">
+			    <div class="container-fluid">
+			        <div class="page-header filled full-block light">
+			            <div class="row">
+			                <div class="col-md-6">
+			                    <h2>Cadastrar Novo Membro</h2>
+			                </div>
+			                <div class="col-md-6">
+			                <h:form>
+			                    <ul class="list-page-breadcrumb">
+			                        <li><h:commandLink actionListener="page_painel">Painel</h:commandLink> <i class="zmdi zmdi-chevron-right"></i></li>
+			                        <li class="active-page"> Cadastrar Membro</li>
+			                    </ul>
+			                    </h:form>
+			                </div>
+			            </div>
+			        </div>
+			        
+			        <div class="row">
+			            <div class="col-md-12">
+			            
+			                <div class="widget-wrap">
+			                <div class="widget-header block-header">
+			                        <h3>Dados do Membro</h3>
+			                        <p>Informe os dados do Membro do clube</p>
+			                    </div>
+			                    <div class="widget-container">
+			                        <div class="widget-content">
+			                            <h:form styleClass="j-forms" pt:id="j-forms">
+			
+			                                <div class="form-content">
+			
+			                                    <!-- start name -->
+			                                    <div class="unit">
+			                                        <div class="input">
+			                                            <label class="icon-left" for="name">
+			                                                <i class="fa fa-user"></i>
+			                                            </label>
+			                                            <h:inputText value="#{desbravadorBean.nome}" styleClass="form-control" id="name" name="name" pt:placeholder="Nome do Membro"/>
+			                                            <span class="tooltip tooltip-left-top">Informe o Nome do Membro</span>
+			                                        </div>
+			                                    </div>
+			                                    <!-- end name -->
+			
+			                                    <!-- start email phone -->
+			                                    <div class="row">
+			                                        <div class="col-md-6 unit">
+			                                            <div class="input">
+			                                                <label class="icon-left" for="email">
+			                                                    <i class="fa fa-envelope-o"></i>
+			                                                </label>
+			                                                <h:inputText value="#{desbravadorBean.email}" styleClass="form-control" pt:type="email" pt:placeholder="Email" id="email" name="email"/>
+			                                                <span class="tooltip tooltip-left-top">Informe o email, caso possua</span>
+			                                            </div>
+			                                        </div>
+			                                        <div class="col-md-6 unit">
+				                                        <div class="input">
+				                                            <label class="icon-left" for="password">
+				                                                <i class="fa fa-lock"></i>
+				                                            </label>
+				                                            <h:inputText value="#{desbravadorBean.cargo}" styleClass="form-control" pt:placeholder="cargo" id="cargo"/>
+				                                            <span class="tooltip tooltip-left-top">Informe o Cargo do membro</span>
+				                                        </div>
+				                                    </div>
+			                                    </div>
+			                                    <!-- end email phone -->
+			                                    
+			                                    <div class="row">
+			                                        <div class="col-md-6 unit">
+				                                        <div class="input">
+				                                            <label class="icon-left" for="mae">
+				                                                <i class="fa fa-edit"></i>
+				                                            </label>
+				                                            <h:inputText value="#{desbravadorBean.nomeMae}" styleClass="form-control" pt:placeholder="Nome da Mae" id="mae"/>
+				                                            <span class="tooltip tooltip-left-top">Informe o nome da Mae</span>
+				                                        </div>
+				                                    </div>
+			                                        <div class="col-md-6 unit">
+			                                            <div class="input">
+			                                                <label class="icon-left" for="pai">
+			                                                    <i class="fa fa-edit"></i>
+			                                                </label>
+			                                                <h:inputText value="#{desbravadorBean.nomePai}" styleClass="form-control" pt:placeholder="Nome do Pai" id="pai" name="pai"/>
+			                                                <span class="tooltip tooltip-left-top">Informe o nome do Pai</span>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+			                                    
+			                                    <div class="row">
+			                                        <div class="col-md-6 unit">
+				                                        <div class="input">
+				                                            <label class="icon-left" for="password">
+				                                                <i class="fa fa-edit"></i>
+				                                            </label>
+				                                            <h:inputText value="#{desbravadorBean.dataNascimento}" pt:type="date" styleClass="form-control" pt:placeholder="data nascimento" id="datanasc">
+				                                            	<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" timeZone="GMT-3" />
+				                                            </h:inputText>
+				                                            <span class="tooltip tooltip-left-top">Informe a data de Nascimento do Membro</span>
+				                                        </div>
+				                                    </div>
+				                                    <div class="col-md-6 unit">
+				                                        <div class="form-content">
+				                                            <div class="unit">
+					                                            <div class="inline-group">
+					                                                <label class="radio">
+					                                                
+				                                            <h:selectOneRadio value="#{desbravadorBean.sexo}" styleClass="meuradio">
+															   <f:selectItem itemValue="true" itemLabel="Masculino" />
+															   <f:selectItem itemValue="false" itemLabel="Feminino" />	   			
+															</h:selectOneRadio>	 
+															
+																	</label>
+																</div>
+															</div>
+				                                        </div>
+				                                    </div>
+			                                    </div>
+			                                    <div class="row">
+			                                        <div class="col-md-12 unit">
+				                                        <div class="input">
+				                                            <label class="icon-left" for="password">
+				                                                <i class="fa fa-edit"></i>
+				                                            </label>
+				                                            <h:inputText value="#{desbravadorBean.endereco}" styleClass="form-control" pt:placeholder="Endereco" id="endereco"/>
+				                                            <span class="tooltip tooltip-left-top">Informe o Endereço do Membro</span>
+				                                        </div>
+				                                    </div>
+				                                 </div>
+
+			                                    <div class="divider gap-bottom-25"></div>
+			
+			                                </div>
+			                                <!-- end /.content -->
+			
+			                                <div class="form-footer">
+			                                    <h:commandButton action="#{desbravadorBean.addDesbravador}" styleClass="btn btn-success primary-btn" value="Cadastrar"/>
+			                                </div>
+			                                <!-- end /.footer -->
+			                                
+			                                <!-- start response from server 
+	                                        <div id="response"></div>-->
+	                                        <!-- end response from server -->
+			
+			                            </h:form>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			   
+			</section>
+		</div>
+	</ui:define>
+	
+	<ui:define name="footer">
+		<footer class="login-page-footer">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+		                <div class="footer-content">
+		                    <span class="footer-meta">Turma&nbsp;2016.1&nbsp;-&nbsp;DEPES&nbsp;<i class="fa fa-book"></i>&nbsp;IFPB</span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+	</ui:define>
+	
+</ui:composition>
+</html>

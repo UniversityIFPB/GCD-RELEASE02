@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+#{sessionBean.check()}
+<!-- add metodo session redirecionado para distrital -->
+<ui:composition>
+	<div class="left-aside-container">
+		<h:form>
+			<div class="user-profile-container">
+				<div class="user-profile clearfix">
+					<div class="admin-user-info">
+						<ul>
+							<li>#{sessionBean.usuarioLogado.email}</li>
+						</ul>
+					</div>
+				</div>
+				<div class="admin-bar">
+					<ul>
+						<li>
+							<h:commandLink action="page_mudar_senha?faces-redirect=true"
+								styleClass="bt-commandlink" title="Alterar Senha" id="mudarsenha">
+								<i class="zmdi zmdi-key"></i>
+							</h:commandLink>
+						</li>
+						<li>
+							<h:commandLink action="#{loginBean.fazerLogout}"
+								styleClass="bt-commandlink" title="Sair do Sistema" id="sair">
+								<i class="zmdi zmdi-power"></i>
+							</h:commandLink>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<ul class="list-accordion tree-style">
+				<li>DESBRAVADORES</li>
+				<li>
+					<h:commandLink action="page_painel?faces-redirect=true">
+						<i class="zmdi zmdi-view-dashboard"></i>
+						<span class="list-label">GERENCIAR MEMBROS</span>
+					</h:commandLink>
+				</li>
+				<li>
+					<h:commandLink action="page_cadastro_membro?faces-redirect=true">
+						<i class="zmdi zmdi-view-dashboard"></i>
+						<span class="list-label">NOVO MEMBRO</span>
+					</h:commandLink>
+				</li>
+				<li>UNIDADES</li>
+				<li>
+					<h:commandLink action="page_unidades?faces-redirect=true">
+						<i class="zmdi zmdi-grid"></i>
+						<span class="list-label">GERENCIAR UNIDADES</span>
+					</h:commandLink>
+				</li>
+				<li>
+					<h:commandLink action="page_cadastro_unidade?faces-redirect=true">
+						<i class="zmdi zmdi-grid"></i>
+						<span class="list-label">NOVA UNIDADE</span>
+					</h:commandLink>
+				</li>
+				<li>CLASSES</li>
+				<li>
+					<h:commandLink action="page_classes?faces-redirect=true">
+						<i class="zmdi zmdi-grid"></i>
+						<span class="list-label">GERENCIAR CLASSES</span>
+					</h:commandLink>
+				</li>
+				<li>CALENDARIO</li>
+				<li>
+					<h:commandLink action="page_eventos?faces-redirect=true">
+						<i class="zmdi zmdi-grid"></i>
+						<span class="list-label">VER EVENTOS</span>
+					</h:commandLink>
+				</li>
+				<li>
+					<h:commandLink action="page_painel?faces-redirect=true">
+						<i class="zmdi zmdi-grid"></i>
+						<span class="list-label">NOVO EVENTO</span>
+					</h:commandLink>
+				</li>
+				<li>
+					<i class="zmdi zmdi-swap"></i><span class="list-label?faces-redirect=true">++</span>
+				</li>
+				
+				
+
+			</ul>
+		</h:form>
+	</div>
+</ui:composition>
+</html>

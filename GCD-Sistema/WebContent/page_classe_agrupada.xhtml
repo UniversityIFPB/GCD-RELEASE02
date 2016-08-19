@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+#{sessionBean.check()}
+
+<ui:composition template="/template/base.xhtml">
+	
+	<ui:define name="title">Dashboard</ui:define>
+	
+	<ui:define name="nav">
+		<header class="topbar clearfix">
+		
+			<div class="row" style="margin-left: 5em;display: inline-flex;">
+				<div class="col=md-8">
+					<h:panelGroup rendered="#{sessionBean.result != 'NONE'}">
+						<h:panelGroup rendered="#{sessionBean.result == 'SUCESSO'}">
+							<div
+								class="col-sm-12 alert alert-success alert-dismissible alert-adjust"
+								style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span>#{sessionBean.msg}<h:messages globalOnly="true"
+										layout="table" showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{sessionBean.result == 'ERRO'}">
+							<div
+								class="col-sm-12 alert alert-danger alert-dismissible alert-adjust"
+								style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+								role="alert">
+								<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+									pt:aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</h:link>
+								<span>#{sessionBean.msg}<h:messages globalOnly="true" layout="table"
+										showSummary="true" showDetails="true" /></span>
+							</div>
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+			</div>
+		
+			<!--Topbar Left Branding With Logo Start-->
+		    <div class="topbar-left pull-left">
+		        <div class="clearfix">
+		            <ul class="left-branding pull-left clickablemenu ttmenu dark-style menu-color-gradient">
+		                <li><span class="left-toggle-switch"><i class="zmdi zmdi-menu"></i></span></li>
+		                <li>
+		                    <div class="logo">
+		                        <h:form><h:commandLink actionListener="page_painel"><h:graphicImage library="images" name="brand.png" styleClass="logo-primary"/></h:commandLink> </h:form>
+		                    </div>
+		                </li>
+		            </ul>
+		        </div>
+		    </div>
+		    <!--Topbar Left Branding With Logo End-->
+		
+			<!--Topbar Right Start Here-->
+			<div class="topbar-right pull-right" style="padding-top: 1em;color:#fff;padding-left:7em;padding-right:7em;background-color: #17bab8;">
+        		<div class="clearfix">
+        			<div>
+        				<h4>Bem Vindo #{sessionBean.usuarioLogado.nome}</h4>
+        			</div>
+        		</div>
+        	</div>
+		   
+		</header>
+	    
+	</ui:define>
+	
+	<ui:define name="sidebar">
+		<aside class="leftbar">
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == true}">
+		    	<ui:include src="/template/sidebar_distrital.xhtml"/>
+		    </h:panelGroup>
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == false}">
+		    	<ui:include src="/template/sidebar_diretor.xhtml"/>
+		    </h:panelGroup>
+		</aside>
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="content-page">
+
+			<section class="main-container">
+			<div class="container-fluid">
+				<div class="page-header filled full-block light">
+					<div class="row">
+						<div class="col-md-6">
+							<h2>Membros</h2>
+						</div>
+						<div class="col-md-6">
+							<h:form>
+								<ul class="list-page-breadcrumb">
+									<li><h:commandLink
+											action="page_painel?faces-redirect=true">Painel</h:commandLink>
+										<i class="zmdi zmdi-chevron-right"></i></li>
+									<li class="active-page">Classe Agrupada</li>
+								</ul>
+							</h:form>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="widget-wrap">
+							<div class="widget-header block-header clearfix">
+								<h3>Classe Agrupada</h3>
+							</div>
+							<div class="widget-container">
+								<div class="widget-content">
+									<div class="table-responsive">
+										<h:panelGroup
+											rendered="#{not empty distritalBean.membrosAgrupadas}">
+											<h:dataTable var="membro"
+												value="#{distritalBean.membrosAgrupadas}"
+												styleClass="table table-striped data-tbl dataTable no-footer dtr-inline tb-classes">
+												<h:column>
+													<f:facet name="header">Membro</f:facet>
+			                            			#{membro.nome}
+			                            		</h:column>
+
+												<h:column>
+													<f:facet name="header">Clube</f:facet>
+													#{membro.clube.nome}
+												</h:column>
+												
+												
+											</h:dataTable>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{empty distritalBean.membrosAgrupadas}">
+											<p>Não existem membros cadastrados no momento!</p>
+										</h:panelGroup>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</section>
+		</div>
+	</ui:define>
+	
+	<ui:define name="footer">
+		<footer class="login-page-footer">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+		                <div class="footer-content">
+		                    <span class="footer-meta">Turma&nbsp;2016.1&nbsp;-&nbsp;DEPES&nbsp;<i class="fa fa-book"></i>&nbsp;IFPB</span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+	</ui:define>
+	
+</ui:composition>
+
+</html>

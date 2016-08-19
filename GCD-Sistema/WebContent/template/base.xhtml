@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title><ui:insert name="title"></ui:insert> - GCD</title>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="#{resource['images/favicon.ico']}"/>
+	
+	<h:outputStylesheet library="css" name="font-awesome.css"/>
+    <h:outputStylesheet library="css" name="material-design-iconic-font.css"/>
+    <h:outputStylesheet library="css" name="bootstrap.css"/>
+    <h:outputStylesheet library="css" name="animate.css"/>
+    <h:outputStylesheet library="css" name="layout.css"/>
+    <h:outputStylesheet library="css" name="components.css"/>
+    <h:outputStylesheet library="css" name="widgets.css"/>
+    <h:outputStylesheet library="css" name="plugins.css"/>
+    <h:outputStylesheet library="css" name="pages.css"/>
+    <h:outputStylesheet library="css" name="bootstrap-extend.css"/>
+    <h:outputStylesheet library="css" name="common.css"/>
+    <h:outputStylesheet library="css" name="responsive.css"/>
+    
+    <style>
+    	.bt-commandlink{margin-top:2em;}
+    	.logo-primary{width:40%;margin-left:5em;margin-top:-3em;}
+    	.content-page{margin-left: 17.9em;margin-top: 4.2em;}
+    	.login-page-footer{color:#fff;}
+    	.selectunidade{display:inline-block !important; width:50% !important; font-weight:10px;}
+    	.tb-classes thead tr th:first-child{width: 20%;}
+    	.tb-classes tbody tr td:first-child{width: 20%;}
+    	.detalhes-classe{color:#ff0000; font-weight:bold;}
+    	.informe-classe{color:#ccc; font-weight:bold;}
+    </style>
+    
+    
+</h:head>
+	
+<h:body styleClass="login-page">	
+	
+	<ui:insert name="nav"></ui:insert>
+	
+	<div id="menuLateral">
+		<ui:insert name="sidebar"></ui:insert>
+	</div>
+	
+	<div id="conteudo">
+		<ui:insert name="content">Conteudo Padrão da View</ui:insert>
+	</div>
+	
+	<div id="footer" class="navbar-fixed-bottom">
+	 	<ui:insert name="footer">Footer Padrão da View</ui:insert>
+	</div>
+	
+	<script src="resources/js/jquery.js"></script>
+	<script src="resources/js/jquery-migrate.js"></script>
+	<script src="resources/js/bootstrap.js"></script>
+	<script src="resources/js/jRespond.js"></script>
+	<script src="resources/js/hammerjs.js"></script>
+	<script src="resources/js/jquery.hammer.js"></script>
+	<script src="resources/js/smoothscroll.js"></script>
+	<script src="resources/js/smart-resize.js"></script>
+	
+	<!--Rightbar End Here-->
+	<script src="resources/js/jquery.ui.js"></script>
+	<script src="resources/js/nav.accordion.js"></script>
+	<script src="resources/js/hover.intent.js"></script>
+	<script src="resources/js/jquery.fitvids.js"></script>
+	<script src="resources/js/scrollup.js"></script>
+	<script src="resources/js/jquery.slimscroll.js"></script>
+	<script src="resources/js/jquery.syntaxhighlighter.js"></script>
+	<script src="resources/js/velocity.js"></script>
+	<script src="resources/js/jquery-jvectormap.js"></script>
+	<script src="resources/js/jquery-jvectormap-world-mill.js"></script>
+	<script src="resources/js/jquery-jvectormap-us-aea.js"></script>
+	
+	<!--iCheck-->
+	<script src="resources/js/icheck.js"></script>
+	<script src="resources/js/jquery.switch.button.js"></script>
+
+	<!--CHARTS-->
+	<script src="resources/js/chart/sparkline/jquery.sparkline.js"></script>
+	<script src="resources/js/chart/easypie/jquery.easypiechart.min.js"></script>
+	<script src="resources/js/chart/flot/excanvas.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.min.js"></script>
+	<script src="resources/js/chart/flot/curvedLines.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.time.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.stack.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.axislabels.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.resize.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.tooltip.min.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.spline.js"></script>
+	<script src="resources/js/chart/flot/jquery.flot.pie.min.js"></script>
+	
+	<!--Calendar-->
+	<script src="resources/js/moment.js"></script>
+	<script src="resources/js/colorpicker.js"></script>
+	<script src="resources/js/bootbox.js"></script>
+	<!--script src="resources/js/fullcalendar.js"</script-->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.min.css"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/fullcalendar.print.css"></script>
+
+	<!--Forms-->
+	<script src="resources/js/jquery.maskedinput.js"></script>
+	<script src="resources/js/jquery.validate.js"></script>
+	<script src="resources/js/jquery.form.js"></script>
+	<!--<script src="resources/js/j-forms.js"></script>
+	<script src="resources/js/jquery.loadmask.js"></script> 
+	<script src="resources/js/vmap.init.js"></script>-->
+	<script src="resources/js/theme-switcher.js"></script>
+	<script src="resources/js/apps.js"></script>
+
+	 
+</h:body>
+</html>

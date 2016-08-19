@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+#{sessionBean.check()}
+<ui:composition template="/template/base.xhtml">
+	
+	<ui:define name="title">Dashboard</ui:define>
+	
+	<ui:define name="nav">
+		<header class="topbar clearfix">
+
+		<div class="row" style="margin-left: 5em;display: inline-flex;">
+			<div class="col=md-8">
+				<h:panelGroup rendered="#{sessionBean.result != 'NONE'}">
+					<h:panelGroup rendered="#{sessionBean.result == 'SUCESSO'}">
+						<div
+							class="col-sm-12 alert alert-success alert-dismissible alert-adjust"
+							style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+							role="alert">
+							<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+								pt:aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</h:link>
+							<span>#{sessionBean.msg}<h:messages globalOnly="true"
+									layout="table" showSummary="true" showDetails="true" /></span>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{sessionBean.result == 'ERRO'}">
+						<div
+							class="col-sm-12 alert alert-danger alert-dismissible alert-adjust"
+							style="text-align: center;font-weight: bold;margin-top: -1em;padding: 1em 14em;"
+							role="alert">
+							<h:link pt:href="#" styleClass="close" pt:data-dismiss="alert"
+								pt:aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</h:link>
+							<span><h:messages globalOnly="true" layout="table"
+									showSummary="true" showDetails="true" /></span>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+			</div>
+		</div>
+
+		<!--Topbar Left Branding With Logo Start-->
+		    <div class="topbar-left pull-left">
+		        <div class="clearfix">
+		            <ul class="left-branding pull-left clickablemenu ttmenu dark-style menu-color-gradient">
+		                <li><span class="left-toggle-switch"><i class="zmdi zmdi-menu"></i></span></li>
+		                <li>
+		                    <div class="logo">
+		                        <h:form><h:commandLink actionListener="page_painel"><h:graphicImage library="images" name="brand.png" styleClass="logo-primary"/></h:commandLink> </h:form>
+		                    </div>
+		                </li>
+		            </ul>
+		        </div>
+		    </div>
+		    <!--Topbar Left Branding With Logo End-->
+		
+			<!--Topbar Right Start Here-->
+			<div class="topbar-right pull-right" style="padding-top: 1em;color:#fff;padding-left:7em;padding-right:7em;background-color: #17bab8;">
+        		<div class="clearfix">
+        			<div>
+        				<h4>Bem Vindo #{sessionBean.usuarioLogado.nome}</h4>
+        			</div>
+        		</div>
+        	</div>
+		   
+		</header>
+	    
+	</ui:define>
+	
+	<ui:define name="sidebar">
+		<aside class="leftbar">
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == true}">
+		    	<ui:include src="/template/sidebar_distrital.xhtml"/>
+		    </h:panelGroup>
+		    <h:panelGroup rendered="#{sessionBean.checkAdmin() == false}">
+		    	<ui:include src="/template/sidebar_diretor.xhtml"/>
+		    </h:panelGroup>
+		</aside>
+	</ui:define>
+	
+	<ui:define name="content">
+		<div class="content-page">
+			
+			<h:panelGroup rendered="#{sessionBean.checkAdmin() == true}">
+				<section class="main-container">
+				    <div class="container-fluid">
+				        <div class="page-header filled full-block light">
+				            <div class="row">
+				                <div class="col-md-6">
+				                    <h2>Clubes</h2>
+				                </div>
+				                <div class="col-md-6">
+				                    <h:form>
+				                    <ul class="list-page-breadcrumb">
+				                        <li><h:commandLink action="page_painel?faces-redirect=true">Painel</h:commandLink> <i class="zmdi zmdi-chevron-right"></i></li>
+				                        <li class="active-page"> Clubes</li>
+				                    </ul>
+				                    </h:form>
+				                </div>
+				            </div>
+				        </div>
+				        
+				        <div class="row">
+				            <div class="col-md-12">
+			                <div class="widget-wrap">
+			                    <div class="widget-header block-header clearfix">
+			                        <h3>Clubes do Distrito</h3>
+			                    </div>
+			                    <div class="widget-container">
+			                        <div class="widget-content">
+			                            <div class="table-responsive">
+			                            	<h:panelGroup rendered="#{not empty distritalBean.clubes}">
+			                            	
+			                            	<h:dataTable var="clube" value="#{distritalBean.clubes}" styleClass="table table-striped data-tbl dataTable no-footer dtr-inline">
+			                            		
+			                            		<h:column>
+			                            			<f:facet name="header">Nome</f:facet>
+			                            			<h:form>
+			                            			<h:commandLink action="#{distritalBean.verMembrosClube(clube.id)}">#{clube.nome}</h:commandLink>
+			                            			</h:form>
+			                            		</h:column>
+			                            		
+			                            		<h:column>
+			                            			<f:facet name="header">Distrito</f:facet>
+			                            			#{clube.distrito}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Diretor</f:facet>
+			                            			#{clube.diretor.nome}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Email Diretor</f:facet>
+			                            			#{clube.diretor.email}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Status</f:facet>
+			                            			<h:panelGroup rendered="#{clube.ativo == true}">
+														<span class="label label-success" title="Clube Ativo">ATIVO</span>
+													</h:panelGroup>
+			                            			<h:panelGroup rendered="#{clube.ativo == false}">
+			                            				<span class="label label-danger" title="Clube Inativo">INATIVO</span>
+			                            			</h:panelGroup>
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Gerenciar</f:facet>
+			                            			<div class="btn-toolbar" role="toolbar">
+					                                    <div class="btn-group" role="group">
+					                                    <h:form>
+					                                        <h:commandLink action="#{clubeBean.preparaEdicao(clube.id)}" styleClass="btn btn-default btn-sm m-user-edit"><i class="zmdi zmdi-edit" pt:title="Editar Clube"></i></h:commandLink>
+					                                        <h:panelGroup rendered="#{clube.ativo == true}">
+					                                        	<h:commandLink actionListener="#{clubeBean.desativarClube(clube.id)}" styleClass="btn btn-default btn-sm m-user-delete"><i class="zmdi zmdi-close" pt:title="Desativar Clube"></i></h:commandLink>
+					                                        </h:panelGroup>
+					                                        <h:panelGroup rendered="#{clube.ativo == false}">
+					                                        	<h:commandLink actionListener="#{clubeBean.ativarClube(clube.id)}" styleClass="btn btn-default btn-sm m-user-delete"><i class="zmdi zmdi-chart" pt:title="Ativar Clube"></i></h:commandLink>
+					                                        </h:panelGroup>
+					                                    </h:form>
+					                                    </div>
+					                                </div>
+			                            		</h:column>
+			                            		
+			                            	</h:dataTable>
+			                            	</h:panelGroup>
+			                            	<h:panelGroup rendered="#{empty distritalBean.clubes}">
+			                            		<p>Não existem clubes cadastrados no momento!</p>
+			                            	</h:panelGroup>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+				        </div>
+				    </div>
+				</section>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{sessionBean.checkAdmin() == false}">
+			#{sessionBean.atualizaDesbravadores()}
+				<section class="main-container">
+				    <div class="container-fluid">
+				        <div class="page-header filled full-block light">
+				            <div class="row">
+				                <div class="col-md-6">
+				                    <h2>Membros</h2>
+				                </div>
+				                <div class="col-md-6">
+				                    <h:form>
+				                    <ul class="list-page-breadcrumb">
+				                        <li><h:commandLink action="page_painel?faces-redirect=true">Painel</h:commandLink> <i class="zmdi zmdi-chevron-right"></i></li>
+				                        <li class="active-page"> Membros</li>
+				                    </ul>
+				                    </h:form>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="row">
+				            <div class="col-md-12">
+			                <div class="widget-wrap">
+			                    <div class="widget-header block-header clearfix">
+			                        <h3>Membros do Clube</h3>
+			                    </div>
+			                    <div class="widget-container">
+			                        <div class="widget-content">
+			                            <div class="table-responsive">
+			                                <h:panelGroup rendered="#{not empty sessionBean.desbravadores}">
+			                            	<h:dataTable var="membro" value="#{sessionBean.desbravadores}" styleClass="table table-striped data-tbl dataTable no-footer dtr-inline">
+			                            		<h:column>
+			                            			<f:facet name="header">COD</f:facet>
+			                            			#{membro.id}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Nome</f:facet>
+			                            			#{membro.nome}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Sexo</f:facet>
+			                            			<h:panelGroup rendered="#{membro.sexo == true}">M</h:panelGroup>
+			                            			<h:panelGroup rendered="#{membro.sexo == false}">F</h:panelGroup>
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Endereço</f:facet>
+			                            			#{membro.endereco}
+			                            		</h:column>
+			                            		<h:column>
+			                            			<f:facet name="header">Cargo</f:facet>
+			                            			#{membro.cargo}
+			                            		</h:column>
+			                            		
+			                            		<h:column>
+			                            			<f:facet name="header">Unidade</f:facet>
+			                            			<h:panelGroup rendered="#{membro.unidadeAtual==null}">
+										                <h:form>
+										                	<h:selectOneMenu styleClass="form-control selectunidade" value="#{desbravadorBean.unidadeID}" pt:title="add unidade">
+										                		<f:selectItem itemValue="" itemLabel="Add Unidade"/>
+										                		<f:selectItems value="#{sessionBean.clube.unidades}" var="u" itemLabel="#{u.nome}" itemValue="#{u.id}"/>
+										                	</h:selectOneMenu>
+										                	<h:commandLink action="#{desbravadorBean.inserirNaUnidade(membro.id)}" styleClass="btn btn-default btn-sm m-user-plus"><i class="glyphicon glyphicon-saved" pt:title="Adicionar"></i></h:commandLink>
+										                </h:form>
+										            </h:panelGroup>
+										            <h:panelGroup rendered="#{membro.unidadeAtual!=null}">
+										                <h:outputLabel value="#{membro.unidadeAtual.nome}"/>
+										            </h:panelGroup>
+			                            		</h:column>
+			                            		
+			                            		<h:column>
+			                            			<f:facet name="header">Gerenciar</f:facet>
+			                            			<h:form>
+			                            				<h:commandLink action="#{desbravadorBean.preparaEdicao(membro.id)}" styleClass="btn btn-default btn-sm m-user-edit"><i class="zmdi zmdi-edit" pt:title="Editar Membro"></i></h:commandLink>
+					                                	<h:panelGroup rendered="#{membro.cargo != 'DIRETOR'}">
+					                                		<h:commandLink action="#{desbravadorBean.excluirMembro(membro.id)}" styleClass="btn btn-default btn-sm m-user-delete"><i class="zmdi zmdi-close" pt:title="Excluir Membro"></i></h:commandLink>
+					                                	</h:panelGroup>
+					                                	<h:panelGroup rendered="#{membro.unidadeAtual!=null}">
+					                                		<h:commandLink action="#{unidadeBean.transferir(membro.id)}" styleClass="btn btn-default btn-sm m-user-edit"><i class="glyphicon glyphicon-share" pt:title="Transferir de Unidade"></i></h:commandLink>
+					                                	</h:panelGroup>
+					                                </h:form>
+					                                 
+			                            		</h:column>
+			                            	</h:dataTable>
+			                            	</h:panelGroup>
+			                            	<h:panelGroup rendered="#{empty sessionBean.desbravadores}">
+			                            		<p>Não existem membros cadastrados no momento!</p>
+			                            	</h:panelGroup>
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+				        </div>
+				    </div>
+				</section>
+			</h:panelGroup>
+		</div>
+	</ui:define>
+	
+	<ui:define name="footer">
+		<footer class="login-page-footer">
+		    <div class="container">
+		        <div class="row">
+		            <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+		                <div class="footer-content">
+		                    <span class="footer-meta">Turma&nbsp;2016.1&nbsp;-&nbsp;DEPES&nbsp;<i class="fa fa-book"></i>&nbsp;IFPB</span>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+	</ui:define>
+	
+</ui:composition>
+
+</html>
