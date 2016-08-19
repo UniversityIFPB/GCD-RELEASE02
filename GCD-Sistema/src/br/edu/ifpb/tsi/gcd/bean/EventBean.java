@@ -1,13 +1,21 @@
 package br.edu.ifpb.tsi.gcd.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.persistence.EntityManager;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.apache.tomcat.jni.Time;
+
+import br.edu.ifpb.tsi.gcd.dao.EventoDAO;
+import br.edu.ifpb.tsi.gcd.dao.PersistenceUtil;
 import br.edu.ifpb.tsi.gcd.model.Event;
 
 @ManagedBean(name = "eventBean")
@@ -17,30 +25,60 @@ public class EventBean {
 	private String tipo;
 	private String nivel;
 	private String descricao;	
-	private Date data;
-	
+	private Date data;	
+
+	private List<Event> events;
+
 	@PostConstruct
 	public void init() {
+		this.events = new ArrayList<Event>();	
+		this.events.add(new Event("casa", "da", "veiaaa", new Date()));
 		reset();
 	}
-	
-//	Metodos de LoginBean
+
+	//	Metodos de LoginBean
 	public void reset(){
 		this.situacao = null;
 		this.tipo = null;
 		this.nivel = null;
 		this.descricao = null;	
 		this.data = null;
-		
+		this.events = null;
+
 	}
-	
+
 	public String saveEvent(){
 		Event e = new Event(this.tipo, this.nivel, this.descricao, this.data);	
-		System.out.println(e.toString());
-		return "page_eventos?faces-redirect=true";
+
+		EventoDAO dao = new EventoDAO(PersistenceUtil.getCurrentEntityManager());
+
+		dao.beginTransaction();
+		dao.insert(e);
+		dao.commit();
 		
+		System.out.println("evento salvo!");
+		return "page_eventos?faces-redirect=true";
+
 	}
+
 	
+	
+
+	public List<Event> getEvents() {
+		/*EventoDAO dao = new EventoDAO(PersistenceUtil.getEntityManager());		
+
+		if(this.events == null){
+			this.events = dao.findAll();			
+		}*/
+		
+		return this.events;
+				
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+
 	public Boolean getSituacao() {
 		return situacao;
 	}

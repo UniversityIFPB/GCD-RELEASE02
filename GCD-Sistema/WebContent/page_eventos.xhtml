@@ -183,7 +183,14 @@
 	</ui:define>
 
 </ui:composition>
-
+	
+	
+	<ui:repeat value="#{eventBean.events}" var="item">
+	    #{item}<br/>
+	</ui:repeat>
+	
+	
+	
 <div id="fullCalModal" class="modal fade">
 	<h:form styleClass="j-forms" pt:id="j-forms">
 		<div class="modal-dialog">
